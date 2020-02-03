@@ -1,0 +1,25 @@
+<h2>Pets Index</h2>
+<% if @shelter %>
+  <h3><%= "#{@shelter.name}'s Pets" %></h3>
+  <p><%= @shelter.id %></p>
+<% else %>
+  <h3>Pets</h3>
+<% end %>
+
+<% @pets.each do |pet| %>
+  <section id="pet-<%= pet.id %>">
+    <p>Name: <a href="/pets/<%= pet.id %>"><%=pet.name%></a></p>
+    <img src="<%= pet.image %>"<br>
+    <p>Age: <%= pet.age %></p>
+    <p>Sex: <%= pet.sex %></p>
+    <p>Shelter: <%= link_to "#{pet.shelter.name}", "/shelters/#{pet.shelter.id}" %></p>
+    <%= link_to 'Update Pet', "/pets/#{pet.id}/edit" %>
+    <br><%= link_to 'Delete Pet', "/pets/#{pet.id}", method: :delete %>
+    <br>
+    <br>
+  </section>
+<% end %>
+
+<% if @shelter %>
+<h4><%= link_to 'Create Pet', "/shelters/#{@shelter.id}/pets/new" %></h4>
+<% end %>

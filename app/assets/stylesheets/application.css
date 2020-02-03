@@ -1,0 +1,74 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ header {
+   margin:0 auto;
+   height: 100px;
+   width: 100px;
+ }
+
+ banner {
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+ h2 {
+	margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-weight: normal;
+	font-size: 30px;
+	line-height: 40px;
+	font-family: 'Orienta', sans-serif;
+}
+
+h3 {
+ margin: 1em 0 0.5em 0;
+ color: #343434;
+ font-weight: normal;
+ font-size: 20px;
+ line-height: 40px;
+ font-family: 'Orienta', sans-serif;
+}
+
+h4 {
+	margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: bold;
+	font-family: 'Josefin Sans',
+  sans-serif;
+}
+
+p {
+  color: #685206;
+  font-family:'Helvetica Neue',
+  sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 0 0 24px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+form label {
+  color: #685206;
+  font-family:'Helvetica Neue',
+  sans-serif;
+  font-size: 14px;
+}
