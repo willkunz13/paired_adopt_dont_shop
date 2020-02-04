@@ -8,3 +8,14 @@
 <%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %>
 <%= link_to 'Delete Shelter', "/shelters/#{@shelter.id}", method: :delete %>
 <%= link_to 'Pets', "/shelters/#{@shelter.id}/pets" %>
+
+<% @shelter.reviews.each do |review| %>
+  <section id="review-<%= review.id %>">
+    <h2>Title: <%= review.title %></h2>
+    <p><%= image_tag("#{review.picture}", size: "100")%></p>
+    <p>Rating: <%= review.rating %></p>
+    <p>Content: <%= review.content %></p>
+    <br>
+    <br>
+  </section>
+<% end %>
