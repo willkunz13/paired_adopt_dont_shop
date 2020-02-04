@@ -1,5 +1,6 @@
 Pet.destroy_all
 Shelter.destroy_all
+Review.destroy_all
 
 shelter1 = Shelter.create(name: "Mike's Shelter", address: "1331 17th Street", city: "Denver", state: "CO", zip: "80202")
 shelter2 = Shelter.create(name: "Meg's Shelter", address: "150 Main Street", city: "Hershey", state: "PA", zip: "17033")
@@ -19,3 +20,7 @@ pet2 = Pet.create(image: "https://s.abcnews.com/images/Lifestyle/puppy-ht-3-er-1
                   adoptable: "yes",
                   shelter_id: shelter2.id
                   )
+review1 = Review.create(title: "Love this shelter!",
+                        rating: 5,
+                        content: "I feel that this shelter has given me so many pets it should be illegal.",
+                        shelter_id: shelter1.id)
