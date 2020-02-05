@@ -21,8 +21,12 @@ class ReviewsController < ApplicationController
     review = Review.find(params[:id])
     review.update(review_params)
 
-    review.save
-    redirect_to "/shelters/#{review.shelter_id}"
+    if review.save
+	    redirect_to "/shelters/#{review.shelter_id}"
+    else
+	flash[:notice] = "Fields required: Title, Rating, Content"
+        redirect_to "/shelters/#{review.shelter_id}/reviews/#{review.id}/edit"
+    end
   end
 
   def destroy
