@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   def new
-	@shelter_id = params[:shelter_id]	
+	  @shelter_id = params[:shelter_id]
   end
 
   def create
@@ -9,14 +9,32 @@ class ReviewsController < ApplicationController
     redirect_to "/shelters/#{review.shelter_id}"
   end
 
+  def edit
+    @review = Review.find(params[:review_id])
+  end
+
+  def update
+    review = Review.find(params[:id])
+    review.update(review_params)
+
+    review.save
+    redirect_to "/shelters/#{review.shelter_id}"
+  end
+
+  def destroy
+    shelter_id = Review.find(params[:id]).shelter.id
+    Review.destroy(params[:id])
+    redirect_to "/shelters/#{shelter_id}"
+  end
+
 	private
 
-	def review_params
+	 def review_params
 	      params.permit(
-		:title,
-		:image,
-		:rating,
-		:content,
-		:shelter_id)
-	end
+		        :title,
+		          :image,
+		            :rating,
+		              :content,
+		                :shelter_id)
+	 end
 end
