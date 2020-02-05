@@ -12,9 +12,9 @@
 <% @shelter.reviews.each do |review| %>
   <section id="review-<%= review.id %>">
     <h2>Title: <%= review.title %></h2>
-	   <% if review.image != nil %>
-    <p><%= image_tag("#{review.image}", size: "100")%></p>
-	   <% end %>
+    <% if review.image != "" %>
+    	<p><%= image_tag("#{review.image}", size: "100")%></p>
+    <% end %>
     <p>Rating: <%= review.rating %></p>
     <p>Content: <%= review.content %></p>
     <p><%= link_to 'Edit Review', "/shelters/#{@shelter.id}/reviews/#{review.id}/edit" %>

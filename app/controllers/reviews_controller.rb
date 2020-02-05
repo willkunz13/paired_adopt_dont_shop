@@ -5,8 +5,12 @@ class ReviewsController < ApplicationController
 
   def create
     review = Review.new(review_params)
-    review.save
-    redirect_to "/shelters/#{review.shelter_id}"
+    if review.save
+	redirect_to "/shelters/#{review.shelter_id}"
+    else
+	flash[:notice] = "Fields required: Title, Rating, Content"
+	redirect_to "/shelters/#{review.shelter_id}/reviews/new"
+    end
   end
 
   def edit
