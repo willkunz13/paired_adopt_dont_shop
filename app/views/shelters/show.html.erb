@@ -12,8 +12,8 @@
 <% @shelter.reviews.each do |review| %>
   <section id="review-<%= review.id %>">
     <h2>Title: <%= review.title %></h2>
-	<% if review.picture != nil %>
-    		<p><%= image_tag("#{review.picture}", size: "100")%></p>
+	<% if review.image != nil %>
+    		<p><%= image_tag("#{review.image}", size: "100")%></p>
 	<% end %>
     <p>Rating: <%= review.rating %></p>
     <p>Content: <%= review.content %></p>
