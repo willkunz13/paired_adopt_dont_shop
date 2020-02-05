@@ -1,21 +1,22 @@
 class ReviewsController < ApplicationController
   def new
-	
+	@shelter_id = params[:shelter_id]	
   end
 
   def create
-    pet = Pet.new({
-      image: params[:image],
-      name: params[:name],
-      description: params[:description],
-      age: params[:age],
-      sex: params[:sex],
-      adoptable: params[:adoptable],
-      shelter_id: params[:shelter_id]
-      })
-
-    pet.save
-
-    redirect_to "/shelters/#{pet.shelter_id}/pets"
+    review = Review.new(review_params)
+    review.save
+    redirect_to "/shelters/#{review.shelter_id}"
   end
+
+	private
+
+	def review_params
+	      params.permit(
+		:title,
+		:image,
+		:rating,
+		:content,
+		:shelter_id)
+	end
 end
