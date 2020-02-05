@@ -17,8 +17,8 @@
 	   <% end %>
     <p>Rating: <%= review.rating %></p>
     <p>Content: <%= review.content %></p>
-    <p><%= link_to 'Edit Review', "/shelters/#{@shelter.id}/reviews/#{review.id}/edit" %></p>
-    <br>
+    <p><%= link_to 'Edit Review', "/shelters/#{@shelter.id}/reviews/#{review.id}/edit" %>
+    <%= link_to 'Delete Review', "/shelters/reviews/#{review.id}", method: :delete %></p>
     <br>
   </section>
 <% end %>
