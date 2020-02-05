@@ -23,4 +23,5 @@ pet2 = Pet.create(image: "https://s.abcnews.com/images/Lifestyle/puppy-ht-3-er-1
 review1 = Review.create(title: "Love this shelter!",
                         rating: 5,
                         content: "I feel that this shelter has given me so many pets it should be illegal.",
+			image: "https://cdn.shopify.com/s/files/1/2336/3219/products/shutterstock_77846398eureka2_x850.jpg?v=1554665666",
                         shelter_id: shelter1.id)
