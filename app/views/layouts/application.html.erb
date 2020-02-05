@@ -13,6 +13,9 @@
       <%= link_to 'Pets Index', "/pets" %>
       <%= link_to 'Shelters Index', "/shelters" %>
     </banner>
+   <h1><% flash.each do |type, message| %><h1>
+      <p><%= message %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
