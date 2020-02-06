@@ -41,7 +41,14 @@ RSpec.describe "On index page" do
 		expect(page).to_not have_content("Odell")
 		visit "/pets/#{@pet2.id}"
 		click_button "Add to Favorites"
-		visit "/favorites"
 		expect(page).to have_content("Odell")
+  	end
+
+	it "can access index from nav bar" do
+		visit "/shelters"
+		within "#nav_bar" do
+			click_link("Favorites")
+        	end
+		expect(current_path).to eq("/favorites")
   	end
 end
