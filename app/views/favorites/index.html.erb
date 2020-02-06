@@ -1,0 +1,16 @@
+<h2>Favorites Index</h2>
+
+<% @pets.each do |pet| %>
+  <section id="pet-<%= pet.id %>">
+    <p>Name: <a href="/pets/<%= pet.id %>"><%=pet.name%></a></p>
+    <img src="<%= pet.image %>"<br>
+    <p>Age: <%= pet.age %></p>
+    <p>Sex: <%= pet.sex %></p>
+    <p>Shelter: <%= link_to "#{pet.shelter.name}", "/shelters/#{pet.shelter.id}" %></p>
+    <br><%= link_to 'Delete Pet', "/pets/#{pet.id}", method: :delete %>
+    <br>
+    <br>
+  </section>
+<% end %>
+
+
