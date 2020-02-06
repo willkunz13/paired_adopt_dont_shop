@@ -11,4 +11,8 @@ class FavoritesController < ApplicationController
 		end
 		redirect_to "/pets/#{pet.id}"
 	end
+	
+	def index
+		@pets = Pet.find([session[:favorites]])
+	end
 end
