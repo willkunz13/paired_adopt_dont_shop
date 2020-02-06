@@ -35,6 +35,22 @@ RSpec.describe "When user adds a favoite" do
   it "displays a message" do
     visit "/pets/#{@pet1.id}"
       click_button "Add to Favorites"
-    expect(page).to have_content("you have added #{@pet1.name} to favorites")
+    expect(page).to have_content("You have added #{@pet1.name} to your favorites! Yay!!!!!")
+  end
+
+  it "doesn't allow you to favorite a pet twice" do
+    visit "/pets/#{@pet1.id}"
+      click_button "Add to Favorites"
+      click_button "Add to Favorites"
+	expect(page).to have_content("#{@pet1.name} is already in your favorites! Yay!!!!!")
+  end
+  it "displays pet count in nav bar on all sites" do
+	 visit "/pets/#{@pet1.id}"
+      click_button "Add to Favorites"
+	 visit "/pets/#{@pet2.id}"
+      click_button "Add to Favorites"
+	within "#nav_bar" do
+		expect(page).to have_content("Favorites(2)")
+	end
   end
 end
