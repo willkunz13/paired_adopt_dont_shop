@@ -7,6 +7,11 @@
 <p>Sex: <%= @pet.sex %></p>
 <p>Adoptable: <%= @pet.adoptable %></p>
 
+<% if favorites.contents.include?(@pet.id.to_s) %>
+<%= button_to "Unfavorite", "/favorites/#{@pet.id}", method: :delete %>
+<% else %>
 <%= button_to "Add to Favorites", "/favorites/#{@pet.id}", method: :patch %>
+<% end %>
+
 <%= link_to 'Update Pet', "/pets/#{@pet.id}/edit" %>
 <%= link_to 'Delete Pet', "/pets/#{@pet.id}", method: :delete %>
