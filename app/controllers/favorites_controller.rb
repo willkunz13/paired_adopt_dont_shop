@@ -15,4 +15,12 @@ class FavoritesController < ApplicationController
 	def index
 		@pets = Pet.find([session[:favorites]])
 	end
+
+	 def destroy
+	    pet = Pet.find(params[:id])
+		pet_id = pet.id.to_s
+    		session[:favorites].delete(pet_id)
+		redirect_back(fallback_location:"/pets")
+  	end
+
 end
