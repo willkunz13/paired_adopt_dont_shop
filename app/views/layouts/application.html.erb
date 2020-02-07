@@ -9,9 +9,10 @@
   </head>
 
   <body>
-    <banner>
+    <banner id="nav_bar">
       <%= link_to 'Pets Index', "/pets" %>
       <%= link_to 'Shelters Index', "/shelters" %>
+     <%= link_to "Favorites(#{favorites.total_count})", "/favorites" %>
     </banner>
    <h1><% flash.each do |type, message| %><h1>
       <p><%= message %></p>
