@@ -51,4 +51,16 @@ RSpec.describe "On index page" do
         	end
 		expect(current_path).to eq("/favorites")
   	end
+
+	it "can remove a pet from the favorites page" do
+		visit "/pets/#{@pet2.id}"
+		click_button "Add to Favorites"
+		visit "/favorites"	
+		expect(page).to have_content(@pet1.name)
+		within "#pet-#{@pet1.id}" do
+			click_button "Unfavorite"
+		end
+		expect(page).to_not have_content(@pet1.name)
+	end
 end
+
