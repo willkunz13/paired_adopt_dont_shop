@@ -1,5 +1,7 @@
 <h2>Favorites Index</h2>
 
+
+
 <% @pets.each do |pet| %>
   <section id="pet-<%= pet.id %>">
     <p>Name: <a href="/pets/<%= pet.id %>"><%=pet.name%></a></p>
@@ -12,5 +14,3 @@
     <br>
   </section>
 <% end %>
-
-
