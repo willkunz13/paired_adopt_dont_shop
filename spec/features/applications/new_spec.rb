@@ -35,7 +35,7 @@ RSpec.describe "On index page" do
     visit "/pets/#{@pet2.id}"
  		click_button "Add to Favorites"
   end
-  
+
     it "can apply for one favorited pet" do
       visit "/favorites"
       click_button "Apply for Pets"
@@ -61,4 +61,20 @@ RSpec.describe "On index page" do
       expect(page).not_to have_content("Age: 1")
       expect(page).not_to have_content("Sex: f")
     end
+
+    it "catches application field that's not filled in" do
+      visit "/favorites"
+      click_button "Apply for Pets"
+
+      within "#pet-#{@pet1.id}" do
+        page.check "pets_"
+      end
+
+      fill_in 'name', with: "Bob"
+      fill_in 'address', with: "123 Rainbow Road"
+      click_button "Submit Application"
+
+      expect(current_path).to eq('/applications/new')
+      expect(page).to have_content("Fields required: Name, Address, City, State, Zip, Phone Number, Description")
+  end
 end
