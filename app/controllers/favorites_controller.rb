@@ -13,7 +13,11 @@ class FavoritesController < ApplicationController
 	end
 
 	def index
-		@pets = Pet.find([session[:favorites]])
+		if session[:favorites].empty?
+			@pets = 0
+		else
+			@pets = Pet.find([session[:favorites]])
+		end
 	end
 
 	 def destroy
