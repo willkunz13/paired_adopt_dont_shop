@@ -35,7 +35,7 @@ RSpec.describe "On index page" do
     visit "/pets/#{@pet2.id}"
  		click_button "Add to Favorites"
   end
-
+  
     it "can apply for one favorited pet" do
       visit "/favorites"
       click_button "Apply for Pets"
