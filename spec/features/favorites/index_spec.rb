@@ -67,4 +67,11 @@ RSpec.describe "On index page" do
 		end
 		expect(page).to have_content("You have no favorited pets.")
 	end
+
+  it "can remove all pets from the favorites page" do
+    visit "/favorites"
+    expect(page).to have_content(@pet1.name)
+    click_button "Unfavorite All Pets"
+    expect(page).to have_content("You have no favorited pets.")
+  end
 end

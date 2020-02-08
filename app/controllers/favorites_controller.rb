@@ -28,4 +28,10 @@ class FavoritesController < ApplicationController
 		redirect_back(fallback_location:"/pets")
   	end
 
+		def destroy_all
+			session[:favorites] = []
+			@pets = 0
+			redirect_back(fallback_location:"/favorites")
+		end
+
 end
