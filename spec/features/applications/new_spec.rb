@@ -52,13 +52,13 @@ RSpec.describe "On index page" do
       fill_in 'state', with: "Denver"
       fill_in 'zip', with: "81125"
       fill_in 'phone', with: "616-222-8989"
-      fill_in 'description[]', with: "I already have 14 dogs and we need to add another member to the team."
+      fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
 
       click_button "Submit Application"
       expect(current_path).to eq("/favorites")
       expect(page).to have_content("Your application has been submitted for Athena!")
       expect(page).to have_content("Favorites(1)")
-      expect(page).to not_have("Age: 1")
-      expect(page).to not_have("Sex: f")
+      expect(page).not_to have_content("Age: 1")
+      expect(page).not_to have_content("Sex: f")
     end
 end

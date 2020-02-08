@@ -1,7 +1,5 @@
 <h2>New Adopt Application</h2>
 
-
-
   <%=form_tag "/applications" do %>
     <br>  <ul>
         <% @pets.each do |pet| %>
@@ -26,7 +24,7 @@
     <br><%= label_tag "Phone Number:" %>
     <br><%= text_field_tag :phone %>
     <br><%= label_tag "Why do you think you would make a great pet owner?" %>
-    <br><%= text_area('description', nil, size: "200x20") %>
+    <br><%= text_area_tag('description', nil, size: "200x20") %>
     <br>
     <br>
     <%= submit_tag 'Submit Application'%>

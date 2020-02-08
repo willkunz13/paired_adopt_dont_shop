@@ -6,8 +6,10 @@ class ApplicationsController < ApplicationController
   def create
     application = Application.new(app_params)
     application.save
-    pet_names = application.pets
-    flash[:notice] = "Your application has been submitted for "
+    pets = Pet.find(params[:pets])
+    application.app_pet_add(pets)
+    params[:pets].each{|pet_id| session[:favorites].delete(pet_id)}
+    flash[:notice] = "Your application has been submitted for #{application.pets.map{|pet| pet.name}.join(", ")}! "
 
     redirect_to "/favorites"
   end
@@ -22,7 +24,6 @@ class ApplicationsController < ApplicationController
               :state,
                 :zip,
                   :phone,
-                    :description,
-                      :pets)
+                    :description)
   end
 end
