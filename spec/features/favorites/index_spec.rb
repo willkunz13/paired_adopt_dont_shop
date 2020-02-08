@@ -1,5 +1,5 @@
 require 'rails_helper'
-  
+
 RSpec.describe "On index page" do
         before(:each) do
                 @shelter1 = Shelter.create(name: "Mike's Shelter",
@@ -31,9 +31,16 @@ RSpec.describe "On index page" do
                         adoptable: "yes",
                         shelter_id: @shelter2.id)
 
+
 		 visit "/pets/#{@pet1.id}"
 		      click_button "Add to Favorites"
 		 end
+
+  it "displays a message if there are no favorites" do
+    visit "/favorites"
+    click_button "Unfavorite"
+    expect(page).to have_content("You have no favorited pets.")
+  end
 
 	it "lists all favorited pets" do
 		visit "/favorites"
@@ -53,14 +60,18 @@ RSpec.describe "On index page" do
   	end
 
 	it "can remove a pet from the favorites page" do
-		visit "/pets/#{@pet2.id}"
-		click_button "Add to Favorites"
-		visit "/favorites"	
+		visit "/favorites"
 		expect(page).to have_content(@pet1.name)
 		within "#pet-#{@pet1.id}" do
 			click_button "Unfavorite"
 		end
-		expect(page).to_not have_content(@pet1.name)
+		expect(page).to have_content("You have no favorited pets.")
 	end
-end
 
+  it "can remove all pets from the favorites page" do
+    visit "/favorites"
+    expect(page).to have_content(@pet1.name)
+    click_button "Unfavorite All Pets"
+    expect(page).to have_content("You have no favorited pets.")
+  end
+end
