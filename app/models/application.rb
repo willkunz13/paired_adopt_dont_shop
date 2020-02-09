@@ -6,4 +6,8 @@ class Application < ApplicationRecord
   def app_pet_add(pets)
     pets.each {|pet| self.pets << pet}
   end
+
+  def favorites_list
+    
+  end
 end
