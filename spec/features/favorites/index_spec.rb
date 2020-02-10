@@ -74,4 +74,33 @@ RSpec.describe "On index page" do
     click_button "Unfavorite All Pets"
     expect(page).to have_content("You have no favorited pets.")
   end
+
+  it "can display a list of all of the pets that have applications on them" do
+    visit "/pets/#{@pet2.id}"
+    click_button "Add to Favorites"
+    visit "/favorites"
+
+    click_button "Apply for Pets"
+
+    within "#pet-#{@pet1.id}" do
+      page.check "pets_"
+    end
+
+    fill_in 'name', with: "Bob"
+    fill_in 'address', with: "123 Rainbow Road"
+    fill_in 'city', with: "Boulder"
+    fill_in 'state', with: "Denver"
+    fill_in 'zip', with: "81125"
+    fill_in 'phone', with: "616-222-8989"
+    fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+    click_button "Submit Application"
+
+    within '#application_status' do
+      expect(page).to have_content(@pet1.name)
+      expect(page).to_not have_content(@pet2.name)
+      click_on '#{@pet1.name}'
+    end
+    expect(current_path).to eq("/pets/#{@pet1.id}")
+  end
 end
