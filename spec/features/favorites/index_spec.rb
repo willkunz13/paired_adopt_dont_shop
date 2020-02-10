@@ -99,7 +99,7 @@ RSpec.describe "On index page" do
     within '#application_status' do
       expect(page).to have_content(@pet1.name)
       expect(page).to_not have_content(@pet2.name)
-      click_on '#{@pet1.name}'
+      click_on "#{@pet1.name}"
     end
     expect(current_path).to eq("/pets/#{@pet1.id}")
   end
