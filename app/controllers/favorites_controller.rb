@@ -18,6 +18,7 @@ class FavoritesController < ApplicationController
 		else
 			@pets = Pet.find([session[:favorites]])
 		end
+		@application_pets = ApplicationPet.all.map {|pet_app| pet_app.pet}.uniq
 	end
 
 	 def destroy
