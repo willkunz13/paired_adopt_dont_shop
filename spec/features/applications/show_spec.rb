@@ -34,26 +34,27 @@ RSpec.describe "On show page" do
                 click_button "Add to Favorites"
     visit "/pets/#{@pet2.id}"
                 click_button "Add to Favorites"
-	visit "/favorites"
-      click_button "Apply for Pets"
-
-      within "#pet-#{@pet1.id}" do
-        page.check "pets_"
-      end
-
-      fill_in 'name', with: "Bob"
-      fill_in 'address', with: "123 Rainbow Road"
-      fill_in 'city', with: "Boulder"
-      fill_in 'state', with: "Denver"
-      fill_in 'zip', with: "81125"
-      fill_in 'phone', with: "616-222-8989"
-      fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
-
-      click_button "Submit Application"
 
    end
 	
 	it "can display application info" do
+		visit "/favorites"
+	      click_button "Apply for Pets"
+
+	      within "#pet-#{@pet1.id}" do
+		page.check "pets_"
+	      end
+
+	      fill_in 'name', with: "Bob"
+	      fill_in 'address', with: "123 Rainbow Road"
+	      fill_in 'city', with: "Boulder"
+	      fill_in 'state', with: "Denver"
+	      fill_in 'zip', with: "81125"
+	      fill_in 'phone', with: "616-222-8989"
+	      fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+	      click_button "Submit Application"
+
 		visit "/applications/#{Application.all.first.id}"
 		expect(page).to have_content("Name: Bob")
 		expect(page).to have_content("Address: 123 Rainbow Road")
@@ -62,5 +63,41 @@ RSpec.describe "On show page" do
 		expect(page).to have_content("Pets: Athena")
 		click_on "Athena"
 		expect(current_path).to eq("/pets/#{@pet1.id}")
+	end
+
+	it "can link applications from pet show page" do
+		visit "/favorites"
+	      click_button "Apply for Pets"
+
+	      within "#pet-#{@pet1.id}" do
+		page.check "pets_"
+	      end
+
+	      fill_in 'name', with: "Bob"
+	      fill_in 'address', with: "123 Rainbow Road"
+	      fill_in 'city', with: "Boulder"
+	      fill_in 'state', with: "Denver"
+	      fill_in 'zip', with: "81125"
+	      fill_in 'phone', with: "616-222-8989"
+	      fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+	      click_button "Submit Application"
+		visit "/pets/#{@pet1.id}"
+		within "#applications" do
+			click_on "View All Applications"
+		end
+		expect(current_path).to eq("/pets/#{@pet1.id}/applications")
+		click_on "Bob"
+		expect(current_path).to eq("/applications/#{Application.all.first.id}")
+	end
+
+	it "can catch empty applications page" do
+		visit "/pets/#{@pet1.id}"
+		within "#applications" do
+			click_on "View All Applications"
+		end
+		expect(current_path).to eq("/pets/#{@pet1.id}/applications")
+		expect(page).to_not have_content("Bob")
+		expect(page).to have_content("There are no applications")
 	end
 end

@@ -1,0 +1,8 @@
+<h2> Applications </h2>
+<% if @pet.applications.empty? %>
+	<p> There are no applications for this pet yet!! so it's last call and you don't have a date.  Put up or shut up sailor </p>
+<% else %>
+	<% @pet.applications.each do |application| %>
+		<%= link_to "#{application.name}", "/applications/#{application.id}" %>
+	<% end %> 
+<% end%>
