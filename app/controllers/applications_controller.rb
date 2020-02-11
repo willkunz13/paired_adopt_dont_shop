@@ -35,7 +35,7 @@ class ApplicationsController < ApplicationController
     else
       pets = Pet.find(params[:pets])
       pets.each {|pet| pet.adopt_pending(app.name); pet.save}
-      redirect_back(fallback_location:"/")
+      redirect_to "/applications/#{app.id}"
     end
   end
 
