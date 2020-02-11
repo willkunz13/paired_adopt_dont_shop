@@ -25,6 +25,14 @@ class ApplicationsController < ApplicationController
 		@pet = Pet.find(params[:pet_id])
 	end
 
+  def update
+    pet = Pet.find(params[:pet_id])
+    pet.adopt_pending
+    pet.save
+    session[:approved_name] = Application.find(params[:app_id]).name
+    redirect_to "/pets/#{pet.id}"
+  end
+
   private
 
   def app_params
