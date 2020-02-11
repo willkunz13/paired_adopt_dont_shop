@@ -100,4 +100,5 @@ RSpec.describe "On show page" do
 		expect(page).to_not have_content("Bob")
 		expect(page).to have_content("There are no applications")
 	end
+	 
 end
