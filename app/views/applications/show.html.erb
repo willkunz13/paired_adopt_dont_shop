@@ -15,7 +15,9 @@
 				<%= check_box_tag 'pets[]', pet.id -%>
 				<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
 				<% if pet.adoptable == "yes" %>
-				<%= button_to "Approve", "/applications/#{@application.id}/#{pet.id}", method: :patch %>
+					<%= link_to "Approve", "/pets/#{pet.id}/applications/#{@application.id}", method: :patch %>
+				<% else %>
+					<%= link_to "Unapprove", "/applications/#{@application.id}/#{pet.id}", method: :delete %>
 				<% end %>
 				</p>
 				</section>

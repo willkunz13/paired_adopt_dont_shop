@@ -39,6 +39,13 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def destroy
+    pet = Pet.find(params[:pet_id])
+    pet.unadopt
+    pet.save
+    redirect_back(fallback_location:"/")
+  end
+
   private
 
   def app_params

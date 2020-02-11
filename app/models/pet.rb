@@ -7,4 +7,8 @@ class Pet < ApplicationRecord
   def adopt_pending(name)
     self.adoptable = name
   end
+
+  def unadopt
+    self.adoptable = "yes"
+  end
 end

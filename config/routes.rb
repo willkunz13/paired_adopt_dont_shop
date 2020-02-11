@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post '/applications', to: 'applications#create'
 	get '/applications/:id', to: 'applications#show'
 	get '/pets/:pet_id/applications', to: 'applications#index'
-  patch '/applications/:app_id/:pet_id', to: 'applications#update'
+  patch '/pets/:pet_id/applications/:app_id', to: 'applications#update'
+  delete '/applications/:app_id/:pet_id', to: 'applications#destroy'
   patch '/applications/:app_id', to: 'applications#update'
 end
