@@ -1,5 +1,5 @@
 require 'rails_helper'
-  
+
 RSpec.describe "On show page" do
   before(:each) do
           @shelter1 = Shelter.create(name: "Mike's Shelter",
@@ -36,7 +36,7 @@ RSpec.describe "On show page" do
                 click_button "Add to Favorites"
 
    end
-	
+
 	it "can display application info" do
 		visit "/favorites"
 	      click_button "Apply for Pets"
@@ -60,7 +60,7 @@ RSpec.describe "On show page" do
 		expect(page).to have_content("Address: 123 Rainbow Road")
 		expect(page).to have_content("City: Boulder")
 		expect(page).to have_content("State: Denver")
-		expect(page).to have_content("Pets: Athena")
+		expect(page).to have_content("\nPets:\nAthena")
 		click_on "Athena"
 		expect(current_path).to eq("/pets/#{@pet1.id}")
 	end
@@ -100,5 +100,126 @@ RSpec.describe "On show page" do
 		expect(page).to_not have_content("Bob")
 		expect(page).to have_content("There are no applications")
 	end
-	 
+
+   it "can approve an application" do
+     visit "/favorites"
+         click_button "Apply for Pets"
+
+         within "#pet-#{@pet1.id}" do
+           page.check "pets_"
+         end
+
+         fill_in 'name', with: "Bob"
+         fill_in 'address', with: "123 Rainbow Road"
+         fill_in 'city', with: "Boulder"
+         fill_in 'state', with: "Denver"
+         fill_in 'zip', with: "81125"
+         fill_in 'phone', with: "616-222-8989"
+         fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+         click_button "Submit Application"
+
+         visit "/applications/#{Application.all.first.id}"
+         within "#pet-#{@pet1.id}" do
+          click_on "Approve"
+         end
+
+         expect(current_path).to eq("/pets/#{@pet1.id}")
+
+         expect(page).to have_content("Adoptable: Pending")
+         expect(page).to have_content("On hold for: Bob")
+   end
+
+   # user story 22
+   # it "can approve many applications" do
+   #   visit "/favorites"
+   #      click_button "Apply for Pets"
+   #
+   #      within "#pet-#{@pet1.id}" do
+   #        page.check "pets_"
+   #      end
+   #
+   #      within "#pet-#{@pet2.id}" do
+   #        page.check "pets_"
+   #
+   #
+   #
+   #    end
+   #  end
+
+    it "pet can only have one approved application at a time" do
+
+      visit "/favorites"
+          click_button "Apply for Pets"
+
+          within "#pet-#{@pet1.id}" do
+            page.check "pets_"
+          end
+
+          fill_in 'name', with: "Bob"
+          fill_in 'address', with: "123 Rainbow Road"
+          fill_in 'city', with: "Boulder"
+          fill_in 'state', with: "Denver"
+          fill_in 'zip', with: "81125"
+          fill_in 'phone', with: "616-222-8989"
+          fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+          click_button "Submit Application"
+
+          visit "/applications/#{Application.all.first.id}"
+          within "#pet-#{@pet1.id}" do
+           click_on "Approve"
+          end
+
+          visit "/pets/#{@pet1.id}"
+                      click_button "Add to Favorites"
+
+          visit "/favorites"
+            click_button "Apply for Pets"
+
+          within "#pet-#{@pet1.id}" do
+            page.check "pets_"
+          end
+
+          fill_in 'name', with: "Sandy"
+          fill_in 'address', with: "123 Rainbow Road"
+          fill_in 'city', with: "Boulder"
+          fill_in 'state', with: "Denver"
+          fill_in 'zip', with: "81125"
+          fill_in 'phone', with: "616-222-8989"
+          fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+          click_button "Submit Application"
+
+          visit "/applications/#{Application.all.first.id}"
+          within "#pet-#{@pet1.id}" do
+            expect(page).to_not have_content("Approve")
+          end
+        end
+
+    it "can revoke an approved application" do
+
+      visit "/favorites"
+          click_button "Apply for Pets"
+
+          within "#pet-#{@pet1.id}" do
+            page.check "pets_"
+          end
+
+          fill_in 'name', with: "Bob"
+          fill_in 'address', with: "123 Rainbow Road"
+          fill_in 'city', with: "Boulder"
+          fill_in 'state', with: "Denver"
+          fill_in 'zip', with: "81125"
+          fill_in 'phone', with: "616-222-8989"
+          fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+          click_button "Submit Application"
+
+          visit "/applications/#{Application.all.first.id}"
+          within "#pet-#{@pet1.id}" do
+           click_on "Approve"
+          end
+
+          
 end

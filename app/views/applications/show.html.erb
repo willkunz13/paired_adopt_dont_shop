@@ -6,6 +6,13 @@
 	<p> Zip: <%= @application.zip %> </p>
 	<p> Phone Number: <%= @application.phone %> </p>
 	<p> Description: <%= @application.description %> </p>
-	<p> Pets: <% @application.pets.each do |pet|%>
-		<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
-	<% end %> </p>
+	 	Pets: <% @application.pets.each do |pet|%>
+		<section id="pet-<%= pet.id %>">
+			<p>
+			<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+			<% if pet.adoptable == "yes" %>
+				<%= button_to "Approve", "/applications/#{@application.id}/#{pet.id}", method: :patch %>
+			<% end %>
+			</p>
+			</section>
+	<% end %>
