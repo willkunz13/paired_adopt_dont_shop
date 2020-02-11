@@ -5,7 +5,11 @@
 <p>Description: <%= @pet.description %></p>
 <p>Age: <%= @pet.age %></p>
 <p>Sex: <%= @pet.sex %></p>
-<p>Adoptable: <%= @pet.adoptable %></p>
+<% if @pet.adoptable == "yes" %>
+  <p>Adoptable: yes</p>
+<% else %>
+  <p>Adoptable: Pending</p>
+<% end %>
 
 <% if favorites.contents.include?(@pet.id.to_s) %>
 <%= button_to "Unfavorite", "/favorites/#{@pet.id}", method: :delete %>
@@ -15,6 +19,6 @@
 <section id="applications">
 <%= link_to 'View All Applications', "/pets/#{@pet.id}/applications" %>
 </section>
-<h3>On hold for: <%= session["approved#{@pet.id}"] %></h3>
+<h3>On hold for: <%= @pet.adoptable %></h3>
 <%= link_to 'Update Pet', "/pets/#{@pet.id}/edit" %>
 <%= link_to 'Delete Pet', "/pets/#{@pet.id}", method: :delete %>

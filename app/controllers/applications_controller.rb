@@ -26,11 +26,17 @@ class ApplicationsController < ApplicationController
 	end
 
   def update
-    pet = Pet.find(params[:pet_id])
-    pet.adopt_pending
-    pet.save
-    session["approved#{pet.id}"] = Application.find(params[:app_id]).name
-    redirect_to "/pets/#{pet.id}"
+    app = Application.find(params[:app_id])
+    if !params[:pets]
+      pet = Pet.find(params[:pet_id])
+      pet.adopt_pending(app.name)
+      pet.save
+      redirect_to "/pets/#{pet.id}"
+    else
+      pets = Pet.find(params[:pets])
+      pets.each {|pet| pet.adopt_pending(app.name); pet.save}
+      redirect_back(fallback_location:"/")
+    end
   end
 
   private
