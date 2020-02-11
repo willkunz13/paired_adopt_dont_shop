@@ -12,6 +12,8 @@
 <% else %>
 <%= button_to "Add to Favorites", "/favorites/#{@pet.id}", method: :patch %>
 <% end %>
-
+<section id="applications">
+<%= link_to 'View All Applications', "/pets/#{@pet.id}/applications" %>
+</section>
 <%= link_to 'Update Pet', "/pets/#{@pet.id}/edit" %>
 <%= link_to 'Delete Pet', "/pets/#{@pet.id}", method: :delete %>
