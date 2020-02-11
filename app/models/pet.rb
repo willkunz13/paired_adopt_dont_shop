@@ -4,7 +4,11 @@ class Pet < ApplicationRecord
 	has_many :application_pets
 	has_many :applications, through: :application_pets
 
-  def adopt_pending
-    self.adoptable = "Pending"
+  def adopt_pending(name)
+    self.adoptable = name
+  end
+
+  def unadopt
+    self.adoptable = "yes"
   end
 end

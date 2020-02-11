@@ -6,13 +6,21 @@
 	<p> Zip: <%= @application.zip %> </p>
 	<p> Phone Number: <%= @application.phone %> </p>
 	<p> Description: <%= @application.description %> </p>
+
+
+	<%= form_tag "/applications/#{@application.id}", method: :patch do %>
 	 	Pets: <% @application.pets.each do |pet|%>
 		<section id="pet-<%= pet.id %>">
 			<p>
-			<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
-			<% if pet.adoptable == "yes" %>
-				<%= button_to "Approve", "/applications/#{@application.id}/#{pet.id}", method: :patch %>
+				<%= check_box_tag 'pets[]', pet.id -%>
+				<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+				<% if pet.adoptable == "yes" %>
+					<%= link_to "Approve", "/pets/#{pet.id}/applications/#{@application.id}", method: :patch %>
+				<% else %>
+					<%= link_to "Unapprove", "/applications/#{@application.id}/#{pet.id}", method: :delete %>
+				<% end %>
+				</p>
+				</section>
 			<% end %>
-			</p>
-			</section>
+    <%= submit_tag 'Approve all selected'%>
 	<% end %>

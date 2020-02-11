@@ -130,22 +130,49 @@ RSpec.describe "On show page" do
          expect(page).to have_content("On hold for: Bob")
    end
 
-   # user story 22
-   # it "can approve many applications" do
-   #   visit "/favorites"
-   #      click_button "Apply for Pets"
-   #
-   #      within "#pet-#{@pet1.id}" do
-   #        page.check "pets_"
-   #      end
-   #
-   #      within "#pet-#{@pet2.id}" do
-   #        page.check "pets_"
-   #
-   #
-   #
-   #    end
-   #  end
+   # user story 23
+   it "can approve many applications" do
+     visit "/favorites"
+        click_button "Apply for Pets"
+
+        within "#pet-#{@pet1.id}" do
+          page.check "pets_"
+        end
+
+        within "#pet-#{@pet2.id}" do
+          page.check "pets_"
+      end
+
+        fill_in 'name', with: "Bob"
+        fill_in 'address', with: "123 Rainbow Road"
+        fill_in 'city', with: "Boulder"
+        fill_in 'state', with: "Denver"
+        fill_in 'zip', with: "81125"
+        fill_in 'phone', with: "616-222-8989"
+        fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+        click_button "Submit Application"
+
+        visit "/applications/#{Application.all.first.id}"
+
+        within "#pet-#{@pet1.id}" do
+          page.check "pets_"
+        end
+
+        within "#pet-#{@pet2.id}" do
+          page.check "pets_"
+        end
+
+        click_button "Approve all selected"
+
+        visit "/pets/#{@pet1.id}"
+        expect(page).to have_content("Adoptable: Pending")
+        expect(page).to have_content("On hold for: Bob")
+
+        visit "/pets/#{@pet2.id}"
+        expect(page).to have_content("Adoptable: Pending")
+        expect(page).to have_content("On hold for: Bob")
+      end
 
     it "pet can only have one approved application at a time" do
 
@@ -221,5 +248,19 @@ RSpec.describe "On show page" do
            click_on "Approve"
           end
 
-          
+          visit "/applications/#{Application.all.first.id}"
+          within "#pet-#{@pet1.id}" do
+            expect(page).to_not have_content("Approve")
+            click_on "Unapprove"
+          end
+
+          expect(current_path).to eq("/applications/#{Application.all.first.id}")
+          within "#pet-#{@pet1.id}" do
+           expect(page).to have_content("Approve")
+          end
+
+          visit "/pets/#{@pet1.id}"
+          expect(page).to have_content("Adoptable: yes")
+          expect(page).to_not have_content("On hold for: Bob")
+        end
 end
