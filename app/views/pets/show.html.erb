@@ -15,6 +15,6 @@
 <section id="applications">
 <%= link_to 'View All Applications', "/pets/#{@pet.id}/applications" %>
 </section>
-<h3>On hold for: <%= session[:approved_name] %></h3>
+<h3>On hold for: <%= session["approved#{@pet.id}"] %></h3>
 <%= link_to 'Update Pet', "/pets/#{@pet.id}/edit" %>
 <%= link_to 'Delete Pet', "/pets/#{@pet.id}", method: :delete %>

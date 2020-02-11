@@ -29,7 +29,7 @@ class ApplicationsController < ApplicationController
     pet = Pet.find(params[:pet_id])
     pet.adopt_pending
     pet.save
-    session[:approved_name] = Application.find(params[:app_id]).name
+    session["approved#{pet.id}"] = Application.find(params[:app_id]).name
     redirect_to "/pets/#{pet.id}"
   end
 
