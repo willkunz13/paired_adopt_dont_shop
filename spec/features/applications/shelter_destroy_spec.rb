@@ -50,19 +50,36 @@ RSpec.describe "shelter show page" do
             	fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
 
             	click_button "Submit Application"
+	end
 
-              visit "/applications/#{Application.all.first.id}"
+    it "won't delete a shelter if there is an approved application" do
+	visit "/applications/#{Application.all.first.id}"
               within "#pet-#{@pet1.id}" do
                click_on "Approve"
               end
               visit "/"
-            end
-
-    it "won't delete a shelter if there is an approved application" do
 
       visit "shelters/#{@shelter1.id}"
 
       click_link "Delete Shelter"
       expect(page).to have_content("Unable to delete shelter with an approved application")
     end
-  end
+	it "will delete all pets and applications related to a deleted shelter" do
+		visit "/shelters/#{@shelter1.id}"
+		click_link "Delete Shelter"
+		expect(page).to_not have_content("#{@shelter1.name}")
+		visit "/pets"
+		expect(page).to_not have_content("#{@pet1.name}")
+	end
+
+	it "will not delete an app pending pet" do
+		visit "/applications/#{Application.all.first.id}"
+              within "#pet-#{@pet1.id}" do
+               click_on "Approve"
+              end
+		visit "/pets/#{@pet1.id}"
+		click_on "Delete Pet"
+		expect(current_path).to eq("/pets/#{@pet1.id}")
+		expect(page).to have_content("Unable to delete pet with an approved application")
+	end
+end
