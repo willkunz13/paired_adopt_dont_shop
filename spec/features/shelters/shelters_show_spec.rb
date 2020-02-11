@@ -141,5 +141,22 @@ RSpec.describe "shelters show page", type: :feature do
 		expect(page).to have_content("Review Average: 5")
 		expect(page).to have_content("Applications: 1")
 	end
+	
+	it "can delete reviews about it with it" do
+		shelter1 = Shelter.create(name: "Mike's Shelter",
+                                address: "1331 17th Street",
+                                city: "Denver",
+                                state: "CO",
+                                zip: "80202")
+		
+		review1 = Review.create(title: "Love this shelter!",
+                              rating: 5,
+                              content: "I feel that this shelter has given me so many pets it should be illegal.",
+                              shelter_id: shelter1.id)
+		
+		visit "/shelters/#{shelter1.id}"
+		click_on "Delete Shelter"
+		expect(Review.first).to eq(nil)
+	end
   end
 end
