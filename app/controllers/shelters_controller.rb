@@ -15,9 +15,12 @@ class SheltersController < ApplicationController
       zip: params[:zip]
       })
 
-    shelter.save
-
-    redirect_to '/shelters'
+    if shelter.save
+	redirect_to '/shelters'
+    else
+	flash[:notice] = "Fields required: Name, Address, City, State, Zip"
+	redirect_to '/shelters/new'
+    end
   end
 
   def show
