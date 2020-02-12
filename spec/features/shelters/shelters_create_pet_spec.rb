@@ -39,5 +39,22 @@ RSpec.describe "shelters index page", type: :feature do
       expect(page).to have_content("2")
       expect(page).to have_content("m")
     end
-  end
+	it "can refute a false pet" do
+		shelter1 = Shelter.create!(name: "Mike's Shelter",
+                                address: "1331 17th Street",
+                                city: "Denver",
+                                state: "CO",
+                                zip: "80202")
+	      visit "/shelters/#{shelter1.id}/pets"
+		click_link "Create Pet"
+		fill_in 'Image', with: 'https://www.readersdigest.ca/wp-content/uploads/sites/14/2013/03/6-facts-to-know-before-owning-a-puppy.jpg'
+	      fill_in 'Name', with: 'Scruffy'
+	      fill_in 'Description', with: 'curious'
+	      fill_in 'Sex', with: 'm'
+
+	      click_on 'Create Pet'
+		expect(current_path).to eq("/shelters/#{shelter1.id}/pets/new")
+		expect(page).to have_content("Fields required: Image, Name, Description, Age, Sex")
+	end
+   end
 end

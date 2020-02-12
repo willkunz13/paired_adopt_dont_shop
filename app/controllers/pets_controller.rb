@@ -22,10 +22,13 @@ class PetsController < ApplicationController
       adoptable: params[:adoptable],
       shelter_id: params[:shelter_id]
       })
-
-    pet.save
-
-    redirect_to "/shelters/#{pet.shelter_id}/pets"
+	
+    if pet.save
+        redirect_to "/shelters/#{pet.shelter_id}/pets"
+    else
+        flash[:notice] = "Fields required: Image, Name, Description, Age, Sex"
+	redirect_back(fallback_location:"/shelters")
+    end
   end
 
   def show
@@ -46,9 +49,12 @@ class PetsController < ApplicationController
       sex: params[:sex],
       })
 
-    pet.save
-
-    redirect_to "/pets/#{pet.id}"
+    if pet.save
+	redirect_to "/pets/#{pet.id}"
+    else
+	flash[:notice] = "Fields required: Image, Name, Description, Age, Sex"
+	redirect_back(fallback_location:"/pets")
+    end
   end
 
   def destroy

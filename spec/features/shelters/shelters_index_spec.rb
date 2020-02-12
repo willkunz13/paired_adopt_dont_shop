@@ -73,6 +73,23 @@ RSpec.describe "shelters index page", type: :feature do
       expect(current_path).to eq("/shelters/#{shelter1.id}")
       expect(page).to have_content("Matts DoggyDayCare")
     end
+	it "can refute a bad edit" do
+		shelter1 = Shelter.create(name: "Mike's Shelter",
+					address: "1331 17th Street",
+					city: "Denver",
+					state: "CO",
+					zip: "80202")
+
+	      visit "/shelters"
+	      click_link "Update Shelter"
+
+	      fill_in 'Name', with: ''
+
+	      click_on "Save Changes"
+
+		expect(current_path).to eq("/shelters/#{shelter1.id}/edit")
+	      expect(page).to have_content("Fields required")
+	end
   end
 end
 
