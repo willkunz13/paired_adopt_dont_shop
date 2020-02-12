@@ -58,5 +58,14 @@ RSpec.describe "When user adds a favoite" do
 
 		click_button "Unfavorite"
 		expect(page).to have_content("Favorites(0)")
-  end
+ 	 end
+	it "removes favorites with the pet" do
+		visit "/pets/#{@pet1.id}"
+	      click_button "Add to Favorites"
+		visit "/pets/#{@pet1.id}"
+		click_on "Delete Pet"
+		visit "/favorites"
+		expect(page).to have_content("Favorites(0)")
+		expect(page).to have_content("You have no favorited pets.")
+	end
 end

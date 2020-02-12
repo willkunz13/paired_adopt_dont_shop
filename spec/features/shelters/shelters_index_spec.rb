@@ -73,6 +73,23 @@ RSpec.describe "shelters index page", type: :feature do
       expect(current_path).to eq("/shelters/#{shelter1.id}")
       expect(page).to have_content("Matts DoggyDayCare")
     end
+	it "can refute a bad edit" do
+		shelter1 = Shelter.create(name: "Mike's Shelter",
+					address: "1331 17th Street",
+					city: "Denver",
+					state: "CO",
+					zip: "80202")
+
+	      visit "/shelters"
+	      click_link "Update Shelter"
+
+	      fill_in 'Name', with: ''
+
+	      click_on "Save Changes"
+
+		expect(current_path).to eq("/shelters/#{shelter1.id}/edit")
+	      expect(page).to have_content("Fields required")
+	end
   end
 end
 
@@ -91,5 +108,21 @@ RSpec.describe "shelters index page", type: :feature do
       expect(current_path).to eq("/shelters")
       expect(page).to have_no_content(shelter1.name)
     end
+	it "displays message when it fails to create shelter" do
+                visit "/shelters"
+	      click_link "New Shelter"
+
+	      expect(current_path).to eq("/shelters/new")
+	      expect(page).to have_content("Create New Shelter")
+
+	      fill_in 'Name', with: 'Matts DoggyDayCare'
+	      fill_in 'Address', with: '123 Sunny Lane'
+	      fill_in 'City', with: 'Denver'
+	      fill_in 'Zip', with: '80205'
+
+	      click_on "Create Shelter"
+		expect(current_path).to eq("/shelters/new")
+		expect(page).to have_content("Fields required: Name, Address, City, State, Zip")
+	end
   end
 end
