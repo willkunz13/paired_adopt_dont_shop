@@ -124,7 +124,7 @@ RSpec.describe "pets index page", type: :feature do
       fill_in 'description', with: ""
         click_on "Update Pet"
 	expect(current_path).to eq("/pets/#{pet1.id}/edit")
-	expect(page).to have_content("Fields required")
+	expect(page).to have_content("Description can't be blank")
 	end
   end
 end

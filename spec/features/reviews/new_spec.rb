@@ -46,7 +46,7 @@ it "can catch incorrect reviews" do
             click_button "Submit"
 
             expect(current_path).to eq("/shelters/#{shelter1.id}/reviews/new")
-            expect(page).to have_content("Fields required: Title, Rating, Content")
+            expect(page).to have_content("Content can't be blank")
     end
  end
 end

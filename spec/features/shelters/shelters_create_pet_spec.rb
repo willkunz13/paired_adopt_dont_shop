@@ -23,18 +23,15 @@ RSpec.describe "shelters index page", type: :feature do
 
       expect(current_path).to eq("/shelters/#{shelter1.id}/pets/new")
 
-      fill_in 'Image', with: 'https://www.readersdigest.ca/wp-content/uploads/sites/14/2013/03/6-facts-to-know-before-owning-a-puppy.jpg'
       fill_in 'Name', with: 'Scruffy'
       fill_in 'Description', with: 'curious'
       fill_in 'Age', with: '2'
       fill_in 'Sex', with: 'm'
-      fill_in 'Adoptable', with: 'yes'
 
       click_on 'Create Pet'
 
       expect(current_path).to eq("/shelters/#{shelter1.id}/pets")
 
-      expect(page).to have_css("img[src*='https://www.readersdigest.ca/wp-content/uploads/sites/14/2013/03/6-facts-to-know-before-owning-a-puppy.jpg']")
       expect(page).to have_content("Scruffy")
       expect(page).to have_content("2")
       expect(page).to have_content("m")
@@ -47,14 +44,13 @@ RSpec.describe "shelters index page", type: :feature do
                                 zip: "80202")
 	      visit "/shelters/#{shelter1.id}/pets"
 		click_link "Create Pet"
-		fill_in 'Image', with: 'https://www.readersdigest.ca/wp-content/uploads/sites/14/2013/03/6-facts-to-know-before-owning-a-puppy.jpg'
 	      fill_in 'Name', with: 'Scruffy'
 	      fill_in 'Description', with: 'curious'
 	      fill_in 'Sex', with: 'm'
 
 	      click_on 'Create Pet'
 		expect(current_path).to eq("/shelters/#{shelter1.id}/pets/new")
-		expect(page).to have_content("Fields required: Image, Name, Description, Age, Sex")
+		expect(page).to have_content("Age can't be blank and Age is not a number")
 	end
    end
 end

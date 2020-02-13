@@ -1,5 +1,6 @@
 class Pet < ApplicationRecord
-  validates_presence_of :image, :name, :age, :sex, :description, :adoptable
+  validates_presence_of  :name, :age, :sex, :description
+	validates_numericality_of :age, greater_than: 0, less_than: 30
   belongs_to :shelter
 	has_many :application_pets, dependent: :destroy
 	has_many :applications, through: :application_pets, dependent: :destroy

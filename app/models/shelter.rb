@@ -1,5 +1,6 @@
 class Shelter < ApplicationRecord
   validates_presence_of :name, :address, :city, :state, :zip
+	validates_numericality_of :zip
   has_many :pets, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
@@ -8,7 +9,7 @@ class Shelter < ApplicationRecord
 	end
 	
 	def avg_rating
-		if self.reviews
+		if !self.reviews.empty?
 			reviews = self.reviews.map {|review| review.rating.to_i}
 			reviews.inject{ |sum, el| sum + el }.to_f / reviews.size
 		else

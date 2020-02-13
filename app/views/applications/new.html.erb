@@ -6,7 +6,7 @@
           <section id="pet-<%= pet.id %>">
             <li>
               <%= check_box_tag 'pets[]', pet.id -%>
-              <%= h pet.name -%>
+              <%= link_to "#{pet.name}", "/pets/#{pet.id}" -%>
             </li>
           </section>
         <% end %>
