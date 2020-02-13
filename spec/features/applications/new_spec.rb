@@ -75,6 +75,41 @@ RSpec.describe "On index page" do
       click_button "Submit Application"
 
       expect(current_path).to eq('/applications/new')
-      expect(page).to have_content("Fields required: Name, Address, City, State, Zip, Phone Number, Description")
+      expect(page).to have_content("State can't be blank, Zip can't be blank, Zip is not a number")
   end
+	it "catches applications pets approval that doesnt have a pet instantly submitted" do
+		 visit "/favorites"
+	      click_button "Apply for Pets"
+		within "#pet-#{@pet1.id}" do
+                page.check "pets_"
+              end
+		fill_in 'name', with: "Bob"
+	      fill_in 'address', with: "123 Rainbow Road"
+	      fill_in 'city', with: "Boulder"
+	      fill_in 'state', with: "Denver"
+	      fill_in 'zip', with: "81125"
+	      fill_in 'phone', with: "616-222-8989"
+	      fill_in 'description', with: "I already have 14 dogs and we need to add another member to the team."
+
+		click_button "Submit Application"
+		visit "/applications/#{Application.last.id}"
+		click_button "Approve all selected"
+		expect(page).to have_content("A pet needs to be selected")
+		click_link "Approve"
+		visit "/applications/#{Application.last.id}"
+		within "#pet-#{@pet1.id}" do
+                	page.check "pets_"
+              	end
+		click_button "Approve all selected"
+		expect(page).to have_content("One or more selected pets already approved")
+
+	end
+	
+	it "can deny when no favorites" do
+		visit "/favorites"
+		click_button "Unfavorite All Pets"
+              click_button "Apply for Pets"
+		expect(page).to have_content("No favorites")
+	end
 end
+

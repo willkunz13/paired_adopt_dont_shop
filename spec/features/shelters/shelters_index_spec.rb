@@ -88,7 +88,7 @@ RSpec.describe "shelters index page", type: :feature do
 	      click_on "Save Changes"
 
 		expect(current_path).to eq("/shelters/#{shelter1.id}/edit")
-	      expect(page).to have_content("Fields required")
+	      expect(page).to have_content("Name can't be blan")
 	end
   end
 end
@@ -122,7 +122,12 @@ RSpec.describe "shelters index page", type: :feature do
 
 	      click_on "Create Shelter"
 		expect(current_path).to eq("/shelters/new")
-		expect(page).to have_content("Fields required: Name, Address, City, State, Zip")
+		expect(page).to have_content("State can't be blank")
 	end
   end
+	it "can fail to open empty favorites" do
+		visit "/"
+		click_link "Favorites(0)"
+		expect(page).to have_content("You have no favorited")
+	end
 end

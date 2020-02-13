@@ -49,9 +49,9 @@ RSpec.describe Application, type: :model do
 
     pets = [pet1, pet2]
 
-    application1 = Application.create!(name: "a", address: "b", city: "c", state: "d", zip: "e", description: "z", phone:"y")
+    application1 = Application.new(name: "a", address: "b", city: "c", state: "d", zip: "3", description: "z", phone:"y")
     application1.app_pet_add(pets)
-
+	application1.save
     expect(application1.pets.size).to eq(2)
   end
   end
