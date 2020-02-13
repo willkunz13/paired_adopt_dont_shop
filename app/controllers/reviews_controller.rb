@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     if review.save
 	redirect_to "/shelters/#{review.shelter_id}"
     else
-	flash[:notice] = "Fields required: Title, Rating, Content"
+	flash[:error] = review.errors.full_messages.to_sentence
 	redirect_to "/shelters/#{review.shelter_id}/reviews/new"
     end
   end
@@ -24,7 +24,7 @@ class ReviewsController < ApplicationController
     if review.save
 	    redirect_to "/shelters/#{review.shelter_id}"
     else
-	flash[:notice] = "Fields required: Title, Rating, Content"
+	flash[:error] = review.errors.full_messages.to_sentence
         redirect_to "/shelters/#{review.shelter_id}/reviews/#{review.id}/edit"
     end
   end

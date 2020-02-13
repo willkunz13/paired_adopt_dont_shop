@@ -19,6 +19,8 @@
 <section id="applications">
 <%= link_to 'View All Applications', "/pets/#{@pet.id}/applications" %>
 </section>
-<h3>On hold for: <%= @pet.adoptable %></h3>
+<% if @pet.adoptable != "yes" %>
+	<h3>On hold for: <%= @pet.adoptable %></h3>
+<% end %>
 <%= link_to 'Update Pet', "/pets/#{@pet.id}/edit" %>
 <%= link_to 'Delete Pet', "/pets/#{@pet.id}", method: :delete %>

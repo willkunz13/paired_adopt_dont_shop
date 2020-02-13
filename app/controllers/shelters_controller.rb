@@ -18,7 +18,7 @@ class SheltersController < ApplicationController
     if shelter.save
 	redirect_to '/shelters'
     else
-	flash[:notice] = "Fields required: Name, Address, City, State, Zip"
+	flash[:error] = shelter.errors.full_messages.to_sentence
 	redirect_to '/shelters/new'
     end
   end
@@ -44,7 +44,7 @@ class SheltersController < ApplicationController
 	if shelter.save
 	    redirect_to "/shelters/#{shelter.id}"
 	else
-		flash[:notice] = "Fields required: Name, Address, City, State, Zip"
+		flash[:error] = shelter.errors.full_messages.to_sentence
 		redirect_back(fallback_location:"/shelters")
 	end
   end

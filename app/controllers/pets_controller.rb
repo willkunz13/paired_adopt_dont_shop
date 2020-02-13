@@ -26,7 +26,7 @@ class PetsController < ApplicationController
     if pet.save
         redirect_to "/shelters/#{pet.shelter_id}/pets"
     else
-        flash[:notice] = "Fields required: Image, Name, Description, Age, Sex"
+	flash[:error] = pet.errors.full_messages.to_sentence
 	redirect_back(fallback_location:"/shelters")
     end
   end
@@ -52,7 +52,7 @@ class PetsController < ApplicationController
     if pet.save
 	redirect_to "/pets/#{pet.id}"
     else
-	flash[:notice] = "Fields required: Image, Name, Description, Age, Sex"
+	flash[:error] = pet.errors.full_messages.to_sentence
 	redirect_back(fallback_location:"/pets")
     end
   end
